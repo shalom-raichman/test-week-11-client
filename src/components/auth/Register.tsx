@@ -11,7 +11,7 @@ const Register = () => {
 
   const handelRegister = async () => {
     const registered = await register({ name, password, orgnizationName: organization as OrgnizationsEnum })
-    if (!registered) return
+    if (registered.err) return
     navigator('/login')
   }
 
