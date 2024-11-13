@@ -1,5 +1,4 @@
 import { UserLoginDTO, UserRegisterDTO } from '../types/DTO/user.DTO'
-import { IUser } from '../types/models/user.model'
 
 export const login = async (userData: UserLoginDTO) => {
   try {
@@ -24,7 +23,7 @@ export const login = async (userData: UserLoginDTO) => {
   }
 }
 
-export const register = async (userData: UserRegisterDTO): Promise<IUser | void> => {
+export const register = async (userData: UserRegisterDTO) => {
   try {
     console.log(userData)
     const res = await fetch('http://localhost:1414/api/users/register', {
