@@ -10,3 +10,18 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.app{
+  display: flex;
+  height: 70vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 50%;
+}
