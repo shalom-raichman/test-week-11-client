@@ -1,30 +1,36 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { UserContext } from '../App'
-import { useContext } from 'react'
+import { useAppDispatch, useAppSelector } from '../redux/store'
+import { logout } from '../redux/userSlice'
 
 const Nav = () => {
-  const { user } = useContext(UserContext)
-
-  if(!user) return
-
+  // const  userContext  = useContext(UserContext)
+  const user = useAppSelector((s) => s.user)
+  const dispatch = useAppDispatch()
   const navigator = useNavigate()
 
   const handelLogout = () => {
     localStorage.removeItem('authorization')
+    dispatch(logout())
     navigator('/login')
   }
   return (
     <div className='nav'>
+      {user.name != '' && (
+        <>
+          {user.orgnization.name.split(' ')[0] == 'IDF' ? (
+            <NavLink to='/interseptors'>Interseptors</NavLink>
+          ) : (
+            <NavLink to='/terorists'>Terorists</NavLink>
+          )}
+        </>
+      )}
 
-      <NavLink to='/interseptors'>Votes</NavLink>
-      {user.organization.name.split()[0] == 'IDF' ?
-        (<NavLink to='/interseptors'>Interseptors</NavLink>) :
-        <NavLink to='/interseptors'>Votes</NavLink>}
+      {/* <NavLink to='/login'>Login</NavLink>
+      <NavLink to='/register'>Register</NavLink> */}
 
-      <NavLink to='/login'>Login</NavLink>
-      <NavLink to='/register'>Register</NavLink>
-
-      <button onClick={handelLogout}>Logout</button>
+      <button className='btn btn-danger' onClick={handelLogout}>
+        Logout
+      </button>
     </div>
   )
 }
