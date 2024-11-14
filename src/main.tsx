@@ -9,7 +9,6 @@ import { io } from 'socket.io-client'
 
 export const socket = io('http://localhost:1414')
 
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
