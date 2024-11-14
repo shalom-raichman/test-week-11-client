@@ -1,4 +1,4 @@
-import {  useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../../utils/authService'
 import { useAppDispatch, useAppSelector } from '../../redux/store'
@@ -13,16 +13,21 @@ const Login = () => {
   const [password, setPasword] = useState<string>('')
 
   const joinRoom = () => {
+    console.log(user)
     if (user.name) {
+      console.log('user conected')
       socket.emit('join_room', user.orgnization.name)
     }
   }
 
   const handelLogin = async () => {
     const logedIn = await login({ name, password })
+    console.log(logedIn)
     if (!logedIn) return
     dispatch(setState(logedIn.data))
-    joinRoom()
+    setTimeout(() => {
+      joinRoom()
+    }, 1000)
 
     logedIn.data.orgnization.name.split(' ')[0] === 'IDF'
       ? navigator('/interseptors')

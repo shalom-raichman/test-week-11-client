@@ -2,8 +2,8 @@ import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Nav from './components/Nav'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import Terorists from './components/pages/Terorists'
-import Inteseptors from './components/pages/Inteseptors'
+import Terorists from './components/pages/terorists/Terorists'
+import Inteseptors from './components/pages/Intrcptors/Inteseptors'
 
 const App = () => {
   return (
