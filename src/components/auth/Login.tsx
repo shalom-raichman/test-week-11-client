@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import {  useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../../utils/authService'
 import { useAppDispatch, useAppSelector } from '../../redux/store'
@@ -6,7 +6,6 @@ import { setState } from '../../redux/userSlice'
 import { socket } from '../../main'
 
 const Login = () => {
-  // const userContexst = useContext(UserContext)
   const user = useAppSelector((s) => s.user)
   const dispatch = useAppDispatch()
   const navigator = useNavigate()
@@ -14,8 +13,7 @@ const Login = () => {
   const [password, setPasword] = useState<string>('')
 
   const joinRoom = () => {
-    console.log('first')
-    if (user.name !== '') {
+    if (user.name) {
       socket.emit('join_room', user.orgnization.name)
     }
   }
@@ -25,6 +23,7 @@ const Login = () => {
     if (!logedIn) return
     dispatch(setState(logedIn.data))
     joinRoom()
+
     logedIn.data.orgnization.name.split(' ')[0] === 'IDF'
       ? navigator('/interseptors')
       : navigator('/terorists')
