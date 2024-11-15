@@ -5,6 +5,7 @@ import {
 } from '../../../types/enums/orgnizationEnum'
 import AmmoBtn from './AmmoBtn'
 import TableRow from '../TableRow'
+import { v4 } from 'uuid'
 
 const Terorists = () => {
   const user = useAppSelector((s) => s.user.user)
@@ -31,6 +32,7 @@ const Terorists = () => {
         </div>
         {user.orgnization.resources.map((r) => (
           <AmmoBtn
+          key={v4()}
             resource={r}
             area={Area}
             organization={user.orgnization.name}
@@ -46,7 +48,7 @@ const Terorists = () => {
           </tr>
         </thead>
         {missileLaunch.map((l) => (
-          <TableRow key={l._id} launch={l} />
+          <TableRow key={v4()} launch={l} />
         ))}
       </table>
     </div>
