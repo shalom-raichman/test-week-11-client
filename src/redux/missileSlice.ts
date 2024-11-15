@@ -18,9 +18,10 @@ export const fetchMissileLaunchList = createAsyncThunk(
   'missileLaunch/getList',
   async (_, thunkApi) => {
     try {
-      const res = await fetch('http://localhost:1414/api/missiles', {
+      const res = await fetch('http://localhost:1414/api/missiles/', {
         headers: {
           authorization: localStorage.getItem('authorization')!,
+          'Content-Type': 'application/json',
         },
       })
       if (!res.ok) {
@@ -42,11 +43,14 @@ export const fetchMissileLaunch = createAsyncThunk(
         method: 'POST',
         headers: {
           authorization: localStorage.getItem('authorization')!,
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(missileLaunch)
+        body: JSON.stringify(missileLaunch),
       })
       if (!res.ok) {
-        return thunkApi.rejectWithValue("Can't launch missile, please try again")
+        return thunkApi.rejectWithValue(
+          "Can't launch missile, please try again"
+        )
       }
       const data = await res.json()
       return thunkApi.fulfillWithValue(data)
@@ -58,14 +62,18 @@ export const fetchMissileLaunch = createAsyncThunk(
 
 export const fetchMissileLaunchStatus = createAsyncThunk(
   'missileLaunch/launchMissileStatus',
-  async (missileLaunchStatus: {id: string, status: MissileLaunchStatusEnum}, thunkApi) => {
+  async (
+    missileLaunchStatus: { _id: string; status: MissileLaunchStatusEnum },
+    thunkApi
+  ) => {
     try {
       const res = await fetch('http://localhost:1414/api/missiles', {
         method: 'PATCH',
         headers: {
           authorization: localStorage.getItem('authorization')!,
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(missileLaunchStatus)
+        body: JSON.stringify(missileLaunchStatus),
       })
       if (!res.ok) {
         return thunkApi.rejectWithValue("Can't fetch status, please try again")
@@ -85,10 +93,13 @@ const missileLaunchSlice = createSlice({
   extraReducers: (builder: ActionReducerMapBuilder<missileLaunchState>) => {
     builder
       .addCase(fetchMissileLaunch.fulfilled, (state, action) => {
-        state.missileLaunch = action.payload.data
+        // state.missileLaunch.push(action.payload.data)
       })
       .addCase(fetchMissileLaunch.rejected, (state) => {
         state.missileLaunch = []
+      })
+      .addCase(fetchMissileLaunchList.fulfilled, (state, action) => {
+        state.missileLaunch = action.payload.data
       })
   },
 })
