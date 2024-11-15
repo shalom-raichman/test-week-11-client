@@ -4,13 +4,11 @@ import {
   AreaEnum,
 } from '../../../types/enums/orgnizationEnum'
 import AmmoBtn from './AmmoBtn'
-import { MissileLaunch } from '../../../types/models/missileLaunch.model'
+import TableRow from '../TableRow'
 
 const Terorists = () => {
   const user = useAppSelector((s) => s.user.user)
-  const [missilsesLaunched, setMissilsesLaunched] = useState<MissileLaunch[]>(
-    []
-  )
+  const missileLaunch = useAppSelector(s=>s.missileLaunch.missileLaunch)
   const [Area, setArea] = useState<AreaEnum>(AreaEnum.IDFCenter)
   return (
     <div className='page'>
@@ -47,6 +45,9 @@ const Terorists = () => {
             <th scope='col'>Status</th>
           </tr>
         </thead>
+        {missileLaunch.map((l) => (
+          <TableRow key={l._id} launch={l} />
+        ))}
       </table>
     </div>
   )
