@@ -1,27 +1,4 @@
-import { UserLoginDTO, UserRegisterDTO } from '../types/DTO/user.DTO'
-
-export const login = async (userData: UserLoginDTO) => {
-  try {
-    const res = await fetch('http://localhost:1414/api/users/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    })
-
-    if (!res.ok) throw new Error("Can't login, please try again")
-
-    const data = await res.json()
-
-    localStorage.setItem('authorization', data.token)
-
-    return data
-  } catch (err) {
-    console.error(err)
-    alert("Can't login, please try again")
-  }
-}
+import { UserRegisterDTO } from '../types/DTO/user.DTO'
 
 export const register = async (userData: UserRegisterDTO) => {
   try {
