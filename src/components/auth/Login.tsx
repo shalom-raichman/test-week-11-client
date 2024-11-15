@@ -11,17 +11,18 @@ const Login = () => {
   const [name, setName] = useState<string>('')
   const [password, setPasword] = useState<string>('')
 
-  const handelLogin = async () => {
+  const handelLogin = () => {
     dispatch(fetchLogin({ name, password }))
-    dispatch(joinRoom())
+    if(!user.name) return
   }
-
+  
   useEffect(() => {
     console.log(user)
     if(!user.name) return
+    dispatch(joinRoom())
     user.orgnization.name.split(' ')[0] === 'IDF'
-      ? navigator('/interseptors')
-      : navigator('/terorists')
+    ? navigator('/interseptors')
+    : navigator('/terorists')
   }, [user])
 
   return (
