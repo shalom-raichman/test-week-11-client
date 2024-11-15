@@ -48,7 +48,8 @@ export const fetchLogin = createAsyncThunk(
         return thunkApi.rejectWithValue("Can't login, please try again")
       }
       const data = await res.json()
-      localStorage.setItem('authorization', data.token)
+
+      localStorage.setItem('authorization', data.data.token)
       return thunkApi.fulfillWithValue(data)
     } catch (err) {
       return thunkApi.rejectWithValue("Can't login, please try again")
