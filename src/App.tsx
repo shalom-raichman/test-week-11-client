@@ -5,8 +5,17 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import Terorists from './components/pages/terorists/Terorists'
 import Inteseptors from './components/pages/Intrcptors/Inteseptors'
 import Gourd from './components/Gourd'
+import { socket } from './main'
+import { useAppDispatch } from './redux/store'
+import { fetchMissileLaunchList } from './redux/missileSlice'
 
 const App = () => {
+  const dispatch = useAppDispatch()
+  socket.on('new_launch_has_accord', (socket) => {
+    console.log('555555555555')
+    dispatch(fetchMissileLaunchList())
+  })
+
   return (
     <div className='app'>
       <Nav />
