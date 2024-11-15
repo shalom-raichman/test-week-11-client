@@ -36,7 +36,7 @@ export const fetchMissileLaunchList = createAsyncThunk(
 
 export const fetchMissileLaunch = createAsyncThunk(
   'missileLaunch/launchMissile',
-  async (missileLaunch, thunkApi) => {
+  async (missileLaunch: MissileLaunch, thunkApi) => {
     try {
       const res = await fetch('http://localhost:1414/api/missiles', {
         method: 'POST',
