@@ -1,38 +1,29 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { login } from '../../utils/authService'
 import { useAppDispatch, useAppSelector } from '../../redux/store'
-import { setState } from '../../redux/userSlice'
-import { socket } from '../../main'
+import { IUser } from '../../types/models/user.model'
+import { fetchLogin, joinRoom } from '../../redux/userSlice'
 
 const Login = () => {
-  const user = useAppSelector((s) => s.user)
+  const user = useAppSelector((s) => s.user.user) as IUser
   const dispatch = useAppDispatch()
   const navigator = useNavigate()
   const [name, setName] = useState<string>('')
   const [password, setPasword] = useState<string>('')
 
-  const joinRoom = () => {
-    console.log(user)
-    if (user.name) {
-      console.log('user conected')
-      socket.emit('join_room', user.orgnization.name)
-    }
+  const handelLogin = async () => {
+    dispatch(fetchLogin({ name, password }))
+    dispatch(joinRoom())
   }
 
-  const handelLogin = async () => {
-    const logedIn = await login({ name, password })
-    console.log(logedIn)
-    if (!logedIn) return
-    dispatch(setState(logedIn.data))
-    setTimeout(() => {
-      joinRoom()
-    }, 1000)
-
-    logedIn.data.orgnization.name.split(' ')[0] === 'IDF'
+  useEffect(() => {
+    console.log(user)
+    if(!user.name) return
+    user.orgnization.name.split(' ')[0] === 'IDF'
       ? navigator('/interseptors')
       : navigator('/terorists')
-  }
+  }, [user])
+
   return (
     <div className='form'>
       <div className='form-group'>
