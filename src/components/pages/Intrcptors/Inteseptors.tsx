@@ -5,7 +5,7 @@ import TableRow from './TableRow'
 import { MissileLaunch } from '../../../types/models/missileLaunch.model'
 
 const Inteseptors = () => {
-  const user = useAppSelector((s) => s.user)
+  const user = useAppSelector((s) => s.user.user)
   const [missilsesLaunched, setMissilsesLaunched] = useState<MissileLaunch[]>(
     []
   )
