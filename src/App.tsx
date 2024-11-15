@@ -4,6 +4,7 @@ import Nav from './components/Nav'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Terorists from './components/pages/terorists/Terorists'
 import Inteseptors from './components/pages/Intrcptors/Inteseptors'
+import Gourd from './components/Gourd'
 
 const App = () => {
   return (
@@ -13,8 +14,8 @@ const App = () => {
         <Route path='/' element={<Navigate to='/login' />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/terorists' element={<Terorists />} />
-        <Route path='/interseptors' element={<Inteseptors />} />
+        <Route path='/terorists' element={<Gourd component={<Terorists />} />} />
+        <Route path='/interseptors' element={<Gourd component={<Inteseptors />} />} />
       </Routes>
     </div>
   )
