@@ -17,7 +17,6 @@ const Login = () => {
   }
   
   useEffect(() => {
-    console.log(user)
     if(!user.name) return
     dispatch(joinRoom())
     user.orgnization.name.split(' ')[0] === 'IDF'

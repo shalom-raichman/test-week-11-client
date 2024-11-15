@@ -2,7 +2,6 @@ import { UserRegisterDTO } from '../types/DTO/user.DTO'
 
 export const register = async (userData: UserRegisterDTO) => {
   try {
-    console.log(userData)
     const res = await fetch('http://localhost:1414/api/users/register', {
       headers: {
         'Content-Type': 'application/json',
@@ -10,7 +9,6 @@ export const register = async (userData: UserRegisterDTO) => {
       method: 'POST',
       body: JSON.stringify(userData),
     })
-    console.log(res)
     if (!res.ok) throw new Error("Can't create new user, please try again")
     return await res.json()
   } catch (err) {
