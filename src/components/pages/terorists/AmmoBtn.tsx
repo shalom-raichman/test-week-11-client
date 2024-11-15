@@ -1,4 +1,6 @@
 import { socket } from '../../../main'
+import { fetchMissileLaunch } from '../../../redux/missileSlice'
+import { useAppDispatch } from '../../../redux/store'
 import { MissileLaunchStatusEnum } from '../../../types/enums/MissileLaunchStatusEnum'
 import {
   AreaEnum,
@@ -14,6 +16,7 @@ interface Props {
 }
 
 const AmmoBtn = ({ resource, area, organization }: Props) => {
+  const dispach = useAppDispatch()
   const handelLaunch = () => {
     const missile_launch: MissileLaunch = {
       rocketType: resource.name,
@@ -21,6 +24,7 @@ const AmmoBtn = ({ resource, area, organization }: Props) => {
       launchTo: area,
       status: MissileLaunchStatusEnum.Launched,
     }
+    dispach(fetchMissileLaunch(missile_launch))
     socket.emit('missile_launch', missile_launch)
   }
   return (
