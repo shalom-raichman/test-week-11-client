@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 import userSlice from './userSlice'
+import missileLaunchSlice from './missileSlice'
 
 const store = configureStore({
   reducer: {
     user: userSlice.reducer,
+    missileLaunch: missileLaunchSlice.reducer
   },
 })
 
