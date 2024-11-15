@@ -15,7 +15,7 @@ const TableRow = ({ launch }: Props) => {
         <td>{launch.timeToHit}</td>
         <td>
           {launch.status}
-          {user.orgnization.name.split(' ')[0] === 'IDF' && <InterceptionBtn/>}
+          {user.orgnization.name.split(' ')[0] === 'IDF' && <InterceptionBtn _id={launch._id as string}/>}
         </td>
       </tr>
     </tbody>
