@@ -2,13 +2,12 @@ import { useState } from 'react'
 import { useAppSelector } from '../../../redux/store'
 import {
   AreaEnum,
-  OrgnizationsEnum,
 } from '../../../types/enums/orgnizationEnum'
 import AmmoBtn from './AmmoBtn'
 import { MissileLaunch } from '../../../types/models/missileLaunch.model'
 
 const Terorists = () => {
-  const user = useAppSelector((s) => s.user)
+  const user = useAppSelector((s) => s.user.user)
   const [missilsesLaunched, setMissilsesLaunched] = useState<MissileLaunch[]>(
     []
   )
