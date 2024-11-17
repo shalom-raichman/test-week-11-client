@@ -1,16 +1,35 @@
-import { useState } from 'react'
-import { useAppSelector } from '../../../redux/store'
-import {
-  AreaEnum,
-} from '../../../types/enums/orgnizationEnum'
+import { useEffect, useState } from 'react'
+import { useAppDispatch, useAppSelector } from '../../../redux/store'
+import { AreaEnum } from '../../../types/enums/orgnizationEnum'
 import AmmoBtn from './AmmoBtn'
 import TableRow from '../TableRow'
 import { v4 } from 'uuid'
+import { socket } from '../../../main'
+import { fetchMissileLaunchList, fetchMissileLaunchListByArea } from '../../../redux/missileSlice'
 
 const Terorists = () => {
   const user = useAppSelector((s) => s.user.user)
-  const missileLaunch = useAppSelector(s=>s.missileLaunch.missileLaunch)
+  const missileLaunch = useAppSelector((s) => s.missileLaunch.missileLaunch)
   const [Area, setArea] = useState<AreaEnum>(AreaEnum.IDFCenter)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    socket.on('new_launch_has_accord', (socket) => {
+      console.log('new_launch_has_accord')
+      setTimeout(() => {
+        dispatch(fetchMissileLaunchList())
+      }, 500)
+    })
+  
+    return () => {
+      socket.off('new_launch_has_accord')
+    }
+  }, [])
+
+  useEffect(() => {
+    dispatch(fetchMissileLaunchList())
+  }, [])
+
   return (
     <div className='page'>
       <h1>Terorists</h1>
@@ -32,7 +51,7 @@ const Terorists = () => {
         </div>
         {user.orgnization.resources.map((r) => (
           <AmmoBtn
-          key={v4()}
+            key={v4()}
             resource={r}
             area={Area}
             organization={user.orgnization.name}
@@ -44,6 +63,8 @@ const Terorists = () => {
           <tr>
             <th scope='col'>Roket</th>
             <th scope='col'>Time To Hit</th>
+            <th scope='col'>Launch from</th>
+            <th scope='col'>Launch to</th>
             <th scope='col'>Status</th>
           </tr>
         </thead>

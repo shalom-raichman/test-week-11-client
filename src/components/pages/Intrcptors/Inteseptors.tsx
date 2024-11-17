@@ -1,12 +1,40 @@
 import { v4 } from 'uuid'
-import { useAppSelector } from '../../../redux/store'
+import { useAppDispatch, useAppSelector } from '../../../redux/store'
 import TableRow from '../TableRow'
 import { useEffect } from 'react'
+import { socket } from '../../../main'
+import { fetchMissileLaunchListByArea } from '../../../redux/missileSlice'
+import { AreaEnum } from '../../../types/enums/orgnizationEnum'
 
 const Inteseptors = () => {
   const user = useAppSelector((s) => s.user.user)
   const missileLaunch = useAppSelector((s) => s.missileLaunch.missileLaunch)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    socket.on('new_launch_has_accord', (socket) => {
+      console.log('fetch list ')
+      setTimeout(() => {
+        dispatch(
+          fetchMissileLaunchListByArea(
+            user.orgnization.name as unknown as AreaEnum
+          )
+        )
+      }, 500)
+    })
+    
   
+    return () => {
+      socket.off('new_launch_has_accord')
+    }
+  }, [])
+
+  useEffect(() => {
+    dispatch(
+      fetchMissileLaunchListByArea(user.orgnization.name as unknown as AreaEnum)
+    )
+  }, [])
+
   return (
     <div>
       <h1>Inteseptors</h1>
@@ -23,6 +51,8 @@ const Inteseptors = () => {
           <tr>
             <th scope='col'>Roket</th>
             <th scope='col'>Time To Hit</th>
+            <th scope='col'>Launch from</th>
+            <th scope='col'>Launch to</th>
             <th scope='col'>Status</th>
           </tr>
         </thead>
