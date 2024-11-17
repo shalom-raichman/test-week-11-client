@@ -1,7 +1,9 @@
 import { socket } from '../../../main'
-import { fetchMissileLaunchStatus } from '../../../redux/missileSlice'
+import {
+  fetchInterception,
+} from '../../../redux/missileSlice'
 import { useAppDispatch } from '../../../redux/store'
-import { MissileLaunchStatusEnum } from '../../../types/enums/MissileLaunchStatusEnum'
+import { InterceptorsEnum } from '../../../types/enums/interceptorsEnum'
 
 interface Props {
   _id: string
@@ -9,15 +11,11 @@ interface Props {
 
 const InterceptionBtn = ({ _id }: Props) => {
   const dispatch = useAppDispatch()
-
   const handelIntercetion = () => {
     dispatch(
-      fetchMissileLaunchStatus({
-        _id,
-        status: MissileLaunchStatusEnum.Intercepted,
-      })
+      fetchInterception({ _id, interceptorType: InterceptorsEnum.IronDome })
     )
-    socket.emit('interception_launch')
+    socket.emit('interception_launch', {_id})
   }
   return (
     <button className='btn btn-danger' onClick={handelIntercetion}>
