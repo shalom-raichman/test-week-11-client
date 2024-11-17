@@ -36,7 +36,7 @@ const Inteseptors = () => {
   }, [])
 
   return (
-    <div>
+    <div className='page'>
       <h1>Inteseptors</h1>
       <div className='ammo-bar'>
         <h4>Available Ammo</h4>
