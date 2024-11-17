@@ -6,6 +6,7 @@ import {
 import { MissileLaunch } from '../types/models/missileLaunch.model'
 import { MissileLaunchStatusEnum } from '../types/enums/MissileLaunchStatusEnum'
 import { AreaEnum } from '../types/enums/orgnizationEnum'
+import { InterceptorsEnum } from '../types/enums/interceptorsEnum'
 
 interface missileLaunchState {
   missileLaunch: MissileLaunch[]
@@ -99,6 +100,32 @@ export const fetchMissileLaunchStatus = createAsyncThunk(
       })
       if (!res.ok) {
         return thunkApi.rejectWithValue("Can't fetch status, please try again")
+      }
+      const data = await res.json()
+      return thunkApi.fulfillWithValue(data)
+    } catch (err) {
+      return thunkApi.rejectWithValue("Can't fetch status, please try again")
+    }
+  }
+)
+
+export const fetchInterception = createAsyncThunk(
+  'missileLaunch/launchMissileStatus',
+  async (
+    missileLaunchStatus: { _id: string; interceptorType: InterceptorsEnum },
+    thunkApi
+  ) => {
+    try {
+      const res = await fetch('http://localhost:1414/api/missiles/intercept', {
+        method: 'PATCH',
+        headers: {
+          authorization: localStorage.getItem('authorization')!,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(missileLaunchStatus),
+      })
+      if (!res.ok) {
+        return thunkApi.rejectWithValue('Interception failed')
       }
       const data = await res.json()
       return thunkApi.fulfillWithValue(data)
