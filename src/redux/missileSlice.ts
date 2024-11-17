@@ -5,6 +5,7 @@ import {
 } from '@reduxjs/toolkit'
 import { MissileLaunch } from '../types/models/missileLaunch.model'
 import { MissileLaunchStatusEnum } from '../types/enums/MissileLaunchStatusEnum'
+import { AreaEnum } from '../types/enums/orgnizationEnum'
 
 interface missileLaunchState {
   missileLaunch: MissileLaunch[]
@@ -19,6 +20,27 @@ export const fetchMissileLaunchList = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       const res = await fetch('http://localhost:1414/api/missiles/', {
+        headers: {
+          authorization: localStorage.getItem('authorization')!,
+          'Content-Type': 'application/json',
+        },
+      })
+      if (!res.ok) {
+        return thunkApi.rejectWithValue("Can't get the list, please try again")
+      }
+      const data = await res.json()
+      return thunkApi.fulfillWithValue(data)
+    } catch (err) {
+      return thunkApi.rejectWithValue("Can't get the list, please try again")
+    }
+  }
+)
+
+export const fetchMissileLaunchListByArea = createAsyncThunk(
+  'missileLaunch/getListByArea',
+  async (area: AreaEnum, thunkApi) => {
+    try {
+      const res = await fetch(`http://localhost:1414/api/missiles/${area}`, {
         headers: {
           authorization: localStorage.getItem('authorization')!,
           'Content-Type': 'application/json',
@@ -99,6 +121,9 @@ const missileLaunchSlice = createSlice({
         state.missileLaunch = []
       })
       .addCase(fetchMissileLaunchList.fulfilled, (state, action) => {
+        state.missileLaunch = action.payload.data
+      })
+      .addCase(fetchMissileLaunchListByArea.fulfilled, (state, action) => {
         state.missileLaunch = action.payload.data
       })
   },
