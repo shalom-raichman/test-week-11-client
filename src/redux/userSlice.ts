@@ -57,6 +57,28 @@ export const fetchLogin = createAsyncThunk(
   }
 )
 
+export const fetchProfile = createAsyncThunk(
+  'user/profile',
+  async (id: string, thunkApi) => {
+    try {
+      const res = await fetch('http://localhost:1414/api/users/profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      })
+      if (!res.ok) {
+        return thunkApi.rejectWithValue("Can't get profile, please try again")
+      }
+      const data = await res.json()
+      return thunkApi.fulfillWithValue(data)
+    } catch (err) {
+      return thunkApi.rejectWithValue((err as Error).message)
+    }
+  }
+)
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -82,6 +104,9 @@ const userSlice = createSlice({
       })
       .addCase(fetchLogin.rejected, (state) => {
         state = initialState
+      })
+      .addCase(fetchProfile.fulfilled, (state, action)=> {
+        state = action.payload
       })
   },
 })
