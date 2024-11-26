@@ -86,27 +86,33 @@ const userSlice = createSlice({
     logout: (state) => {
       localStorage.removeItem('authorization')
       state = initialState
+      return state
     },
     joinRoom: (state) => {
       if (state.user) {
         console.log('user conected')
         socket.emit('join_room', state.user.orgnization.name)
       }
+      return state
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<userState>) => {
     builder
       .addCase(fetchLogin.pending, (state) => {
         state = initialState
+        return state
       })
       .addCase(fetchLogin.fulfilled, (state, action) => {
         state.user = action.payload.data
+        return state
       })
       .addCase(fetchLogin.rejected, (state) => {
         state = initialState
+        return state
       })
       .addCase(fetchProfile.fulfilled, (state, action)=> {
         state = action.payload
+        return state
       })
   },
 })
