@@ -5,7 +5,7 @@ import AmmoBtn from './AmmoBtn'
 import TableRow from '../TableRow'
 import { v4 } from 'uuid'
 import { socket } from '../../../main'
-import { fetchMissileLaunchList, fetchMissileLaunchListByArea } from '../../../redux/missileSlice'
+import { fetchMissileLaunchList } from '../../../redux/missileSlice'
 
 const Terorists = () => {
   const user = useAppSelector((s) => s.user.user)
@@ -14,7 +14,7 @@ const Terorists = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    socket.on('new_launch_has_accord', (socket) => {
+    socket.on('new_launch_has_accord', () => {
       console.log('new_launch_has_accord')
       setTimeout(() => {
         dispatch(fetchMissileLaunchList())

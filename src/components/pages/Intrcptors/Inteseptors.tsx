@@ -12,7 +12,7 @@ const Inteseptors = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    socket.on('new_launch_has_accord', (socket) => {
+    socket.on('new_launch_has_accord', () => {
       console.log('fetch list ')
       setTimeout(() => {
         dispatch(

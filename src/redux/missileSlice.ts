@@ -141,7 +141,7 @@ const missileLaunchSlice = createSlice({
   reducers: {},
   extraReducers: (builder: ActionReducerMapBuilder<missileLaunchState>) => {
     builder
-      .addCase(fetchMissileLaunch.fulfilled, (state, action) => {
+      .addCase(fetchMissileLaunch.fulfilled, () => {
         // state.missileLaunch.push(action.payload.data)
       })
       .addCase(fetchMissileLaunch.rejected, (state) => {
