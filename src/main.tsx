@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import store from './redux/store.ts'
 import { io } from 'socket.io-client'
 
-export const socket = io('http://localhost:1414')
+export const socket = io('https://my-first-server-deploy.onrender.com')
 
 createRoot(document.getElementById('root')!).render(
   

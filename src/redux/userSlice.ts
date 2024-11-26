@@ -37,7 +37,7 @@ export const fetchLogin = createAsyncThunk(
   'user/login',
   async (user: UserLoginDTO, thunkApi) => {
     try {
-      const res = await fetch('http://localhost:1414/api/users/login', {
+      const res = await fetch('https://my-first-server-deploy.onrender.com/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export const fetchProfile = createAsyncThunk(
   'user/profile',
   async (id: string, thunkApi) => {
     try {
-      const res = await fetch('http://localhost:1414/api/users/profile', {
+      const res = await fetch('https://my-first-server-deploy.onrender.com/api/users/profile', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

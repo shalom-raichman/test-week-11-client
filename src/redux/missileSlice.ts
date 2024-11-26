@@ -20,7 +20,7 @@ export const fetchMissileLaunchList = createAsyncThunk(
   'missileLaunch/getList',
   async (_, thunkApi) => {
     try {
-      const res = await fetch('http://localhost:1414/api/missiles/', {
+      const res = await fetch('https://my-first-server-deploy.onrender.com/api/missiles/', {
         headers: {
           authorization: localStorage.getItem('authorization')!,
           'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ export const fetchMissileLaunchListByArea = createAsyncThunk(
   'missileLaunch/getListByArea',
   async (area: AreaEnum, thunkApi) => {
     try {
-      const res = await fetch(`http://localhost:1414/api/missiles/${area}`, {
+      const res = await fetch(`https://my-first-server-deploy.onrender.com/api/missiles/${area}`, {
         headers: {
           authorization: localStorage.getItem('authorization')!,
           'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export const fetchMissileLaunch = createAsyncThunk(
   'missileLaunch/launchMissile',
   async (missileLaunch: MissileLaunch, thunkApi) => {
     try {
-      const res = await fetch('http://localhost:1414/api/missiles', {
+      const res = await fetch('https://my-first-server-deploy.onrender.com/api/missiles', {
         method: 'POST',
         headers: {
           authorization: localStorage.getItem('authorization')!,
@@ -90,7 +90,7 @@ export const fetchMissileLaunchStatus = createAsyncThunk(
     thunkApi
   ) => {
     try {
-      const res = await fetch('http://localhost:1414/api/missiles', {
+      const res = await fetch('https://my-first-server-deploy.onrender.com/api/missiles', {
         method: 'PATCH',
         headers: {
           authorization: localStorage.getItem('authorization')!,
@@ -116,7 +116,7 @@ export const fetchInterception = createAsyncThunk(
     thunkApi
   ) => {
     try {
-      const res = await fetch('http://localhost:1414/api/missiles/intercept', {
+      const res = await fetch('https://my-first-server-deploy.onrender.com/api/missiles/intercept', {
         method: 'PATCH',
         headers: {
           authorization: localStorage.getItem('authorization')!,

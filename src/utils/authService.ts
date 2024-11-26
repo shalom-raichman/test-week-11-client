@@ -2,7 +2,7 @@ import { UserRegisterDTO } from '../types/DTO/user.DTO'
 
 export const register = async (userData: UserRegisterDTO) => {
   try {
-    const res = await fetch('http://localhost:1414/api/users/register', {
+    const res = await fetch('https://my-first-server-deploy.onrender.com/api/users/register', {
       headers: {
         'Content-Type': 'application/json',
       },
